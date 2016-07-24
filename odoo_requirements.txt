@@ -39,3 +39,4 @@ vatnumber
 vobject
 wsgiref
 xlwt
+xlwt
