@@ -1,6 +1,8 @@
 # odooku
 Run Odoo on Heroku
 
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 #
 
 https://devcenter.heroku.com/articles/s3

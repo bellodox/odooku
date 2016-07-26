@@ -1,0 +1,21 @@
+{
+  "name": "Odooku",
+  "description": "Run Odoo on Heroku",
+  "repository": "https://github.com/adaptivdesign/odooku",
+  "keywords": ["odoo", "openerp", "python"],
+  "addons": ["heroku-postgresql:hobby-dev"],
+  "env": {
+    "AWS_ACCESS_KEY_ID": {
+      "description": "AWS access key id",
+      "value": ""
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "description": "AWS secret access key",
+      "value": ""
+    },
+    "S3_BUCKET": {
+      "description": "Amazon S3 bucket for attachment storage",
+      "value": ""
+    }
+  }
+}
