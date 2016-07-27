@@ -1,3 +1,6 @@
+.vagrant
+.bundle
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -74,9 +77,6 @@ target/
 
 # celery beat schedule file
 celerybeat-schedule
-
-# dotenv
-.env
 
 # virtualenv
 venv/
