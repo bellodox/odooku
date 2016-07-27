@@ -3,7 +3,12 @@
   "description": "Run Odoo on Heroku",
   "repository": "https://github.com/adaptivdesign/odooku",
   "keywords": ["odoo", "openerp", "python"],
-  "addons": ["heroku-postgresql:hobby-dev"],
+  "buildpacks": [
+    {
+      "url": "https://github.com/adaptivdesign/odooku-buildpack"
+    }
+  ],
+  "addons": ["heroku-postgresql:hobby"],
   "env": {
     "AWS_ACCESS_KEY_ID": {
       "description": "AWS access key id",
