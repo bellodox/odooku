@@ -4,13 +4,10 @@
 
 $TRUSTY = <<SCRIPT
 
-sudo curl -sSL https://get.docker.com/ | sh
-sudo usermod -aG docker ${USER}
-
-sudo mkdir /buildstep
-sudo chown ${USER} /buildstep
-git clone https://github.com/progrium/buildstep /buildstep
-cd /buildstep && make build
+# Herokuish
+sudo docker pull gliderlabs/herokuish
+sudo mkdir -p /odooku/cache /odooku/build /odooku/filestore
+sudo chown -R $USER /odooku
 
 # Postgresql
 sudo docker run \
@@ -19,11 +16,17 @@ sudo docker run \
   -e POSTGRES_USER=odoo \
   -d \
   --net host \
-  postgres:latest
+  postgres:9.5
 
+sleep 10
 DATABASE=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
 sudo docker exec postgres createdb -U odoo $DATABASE
-export DATABASE_URL=postgres://odoo:odoo@localhost:6212/$DATABASE
+export DATABASE_URL=postgres://odoo:odoo@localhost:5432/$DATABASE
+
+sudo tee /etc/environment > /dev/null <<EOF
+export DATABASE_URL=$DATABASE_URL
+export PORT=8000
+EOF
 
 SCRIPT
 
@@ -37,15 +40,15 @@ Vagrant.configure(2) do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "box-cutter/ubuntu1404-docker"
   config.vm.synced_folder '.', '/vagrant'
   config.vm.provision "shell", inline: $TRUSTY, privileged: false
 
-  config.vm.network "forwarded_port", guest: 80, host: 8000
-  config.vm.network "forwarded_port", guest: 443, host: 8443
+  config.vm.network "forwarded_port", guest: 8000, host: 8000
+  config.vm.network "forwarded_port", guest: 8443, host: 8443
   config.vm.provider "virtualbox" do |vb|
-     vb.memory = 1024
-     vb.cpus = 1
+     vb.memory = 2048
+     vb.cpus = 2
   end
 
 end
