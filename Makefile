@@ -39,7 +39,7 @@ run:
 
 
 psql:
-	docker run \
+	@docker run \
 		--rm \
 		-it \
 		--net host \
