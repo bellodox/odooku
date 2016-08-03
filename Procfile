@@ -1,1 +1,1 @@
-web: odooku $PORT
+web: odooku $PORT -w 3
