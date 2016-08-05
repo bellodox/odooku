@@ -1,9 +1,9 @@
-![odooku](https://cloud.githubusercontent.com/assets/51578/13712821/b68a42ce-e793-11e5-96b0-d8eb978137ba.png)
+![Odooku](/img.svg?raw=true "Odooku")
 
 # Odooku
 Run Odoo on Heroku
 
-![odooku](img.svg?raw=true "Odooku")
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## Run on Heroku
 
