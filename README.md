@@ -1,4 +1,4 @@
-![Odooku](/img.svg?raw=true "Odooku")
+![Odooku](https://cdn.rawgit.com/adaptivdesign/odooku/master/img.svg "Odooku")
 
 # Odooku
 Run Odoo on Heroku
