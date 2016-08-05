@@ -36,8 +36,7 @@ usign the 'odooku preload' command. Database initialization using a web worker
 is possible however.
 
 ```
-$ heroku run bin/bash
-$ odooku preload
+$ heroku run odooku preload
 ```
 
 ## CRON worker
