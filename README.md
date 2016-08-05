@@ -79,9 +79,17 @@ $ make run-worker
 $ make shell
 ```
 
-
 ## Psql access
 
 ```
 $ make psql
+```
+
+## Create new database and s3 bucket
+
+```
+$ make new-env
+$ make shell
+$$ odooku preload
+$ make run-web
 ```

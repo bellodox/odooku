@@ -1,1 +1,2 @@
-web: odooku $PORT -w 3
+web: odooku wsgi $PORT
+worker: odooku cron

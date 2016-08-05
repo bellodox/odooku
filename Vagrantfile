@@ -6,27 +6,38 @@ $TRUSTY = <<SCRIPT
 
 # Herokuish
 sudo docker pull gliderlabs/herokuish
-sudo mkdir -p /odooku/cache /odooku/build /odooku/filestore
+sudo mkdir -p /odooku/cache /odooku/build
 sudo chown -R $USER /odooku
+touch /odooku/env.mk
 
 # Postgresql
 sudo docker run \
   --name postgres \
+  --restart always \
   -e POSTGRES_PASSWORD=odoo \
   -e POSTGRES_USER=odoo \
   -d \
   --net host \
   postgres:9.5
 
-sleep 10
-DATABASE=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
-sudo docker exec postgres createdb -U odoo $DATABASE
-export DATABASE_URL=postgres://odoo:odoo@localhost:5432/$DATABASE
+# Redis
+sudo docker run \
+  --name redis \
+  --restart always \
+  -d \
+  --net host \
+  redis
 
-sudo tee /etc/environment > /dev/null <<EOF
-export DATABASE_URL=$DATABASE_URL
-export PORT=8000
-EOF
+# S3
+sudo docker run \
+  --name s3 \
+  --restart always \
+  -d \
+  --net host \
+  lphoward/fake-s3
+
+sleep 10
+cd /vagrant && sudo make new-env
 
 SCRIPT
 
