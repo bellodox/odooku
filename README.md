@@ -21,7 +21,16 @@ $ vagrant up
 $ vagrant ssh
 $ cd /vagrant
 $ make build
-$ make run
+$ make run-web
 ```
 
-Odoo will be available at http://localhost:8000
+## Preload database
+
+```
+# (For Heroku)
+$ heroku run bin/bash
+# (For Vagrant)
+$ make shell
+
+$ odooku preload
+```
