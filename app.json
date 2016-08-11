@@ -22,5 +22,8 @@
       "description": "Amazon S3 bucket for attachment storage",
       "value": ""
     }
+  },
+  "scripts": {
+    "postdeploy": "odooku preload"
   }
 }
