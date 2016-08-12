@@ -8,7 +8,10 @@
       "url": "https://github.com/adaptivdesign/odooku-buildpack"
     }
   ],
-  "addons": ["heroku-postgresql:hobby-basic"],
+  "addons": [
+    "heroku-postgresql:hobby-basic",
+    "heroku-redis:hobby-dev"
+  ],
   "env": {
     "AWS_ACCESS_KEY_ID": {
       "description": "AWS access key id",
