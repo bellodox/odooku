@@ -66,7 +66,8 @@ $ odooku cron --once
 
 ## Vagrant development machine
 A vagrant machine is provivded for development purposes. It fully emulates
-the Heroku environment.
+the Heroku environment. A random database, S3 bucket and admin password are
+created by the 'new-env' command.
 
 ```
 $ vagrant up
@@ -101,4 +102,20 @@ $ make new-env
 $ make shell
 $$ odooku preload
 $ make run-web
+```
+
+## Database
+Odooku can be run in single database mode, or Odoo's regular behaviour. If a
+database is specified in DATABASE_URL, single database mode is enabled.
+
+### Backup and Restore
+Backup behaves the same way in both modes. For a restore in single database
+mode, copy paste the name of the existing database, this database will be
+overwritten.
+
+### Admin password
+Odooku disables the default admin password configuration entry used by Odoo.
+
+```
+$ heroku config:set ODOOKU_ADMIN_PASSWORD=<your_password>
 ```

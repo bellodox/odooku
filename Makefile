@@ -2,17 +2,18 @@ include /odooku/env.mk
 
 PORT=8000
 NUM=1
-DB_USER=$(shell echo $$DATABASE_URL | sed -e 's/^postgres:\/\/\(.*\):.*@.*:.*\/.*$$/\1/')
-DB_PASSWORD=$(shell echo $$DATABASE_URL | sed -e 's/^postgres:\/\/.*:\(.*\)@.*:.*\/.*$$/\1/')
-DB_HOST=$(shell echo $$DATABASE_URL | sed -e 's/^postgres:\/\/.*:.*@\(.*\):.*\/.*$$/\1/')
-DB_PORT=$(shell echo $$DATABASE_URL | sed -e 's/^postgres:\/\/.*:.*@.*:\(.*\)\/.*$$/\1/')
-DB_NAME=$(shell echo $$DATABASE_URL | sed -e 's/^postgres:\/\/.*:.*@.*:.*\/\(.*\)$$/\1/')
+DB_USER=$(shell echo ${DATABASE_URL} | sed -e 's/^postgres:\/\/\(.*\):.*@.*:.*\/.*$$/\1/')
+DB_PASSWORD=$(shell echo ${DATABASE_URL} | sed -e 's/^postgres:\/\/.*:\(.*\)@.*:.*\/.*$$/\1/')
+DB_HOST=$(shell echo ${DATABASE_URL} | sed -e 's/^postgres:\/\/.*:.*@\(.*\):.*\/.*$$/\1/')
+DB_PORT=$(shell echo ${DATABASE_URL} | sed -e 's/^postgres:\/\/.*:.*@.*:\(.*\)\/.*$$/\1/')
+DB_NAME=$(shell echo ${DATABASE_URL} | sed -e 's/^postgres:\/\/.*:.*@.*:.*\/\(.*\)$$/\1/')
 BUILDPACK_URL=https://github.com/adaptivdesign/odooku-buildpack
 
 NEW_DATABASE:=$(shell cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
 define NEW_ENV
 DATABASE_URL=postgres://odoo:odoo@localhost:5432/${NEW_DATABASE}
+ADMIN_PASSWORD=${NEW_DATABASE}
 REDIS_URL=redis://localhost:6379
 S3_BUCKET=${NEW_DATABASE}
 endef
@@ -29,6 +30,7 @@ define RUN_ARGS
 -e S3_BUCKET="${S3_BUCKET}" \
 -e S3_DEV_URL="http://localhost:4569" \
 -e PORT="${PORT}" \
+-e ODOOKU_ADMIN_PASSWORD="${ADMIN_PASSWORD}" \
 gliderlabs/herokuish
 endef
 
@@ -46,9 +48,10 @@ endef
 
 
 new-env:
-	echo "Creating empty database ${NEW_DATABASE}"
+	@echo "Creating empty database ${NEW_DATABASE}"
 	@docker exec postgres createdb -U odoo ${NEW_DATABASE}
-	echo "Updating env"
+	@echo "Updating env"
+	@echo "Admin password: ${NEW_DATABASE}"
 	@echo "$$NEW_ENV" > /odooku/env.mk
 
 
