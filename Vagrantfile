@@ -6,7 +6,7 @@ $TRUSTY = <<SCRIPT
 
 # Herokuish
 sudo docker pull gliderlabs/herokuish
-sudo mkdir -p /odooku/cache /odooku/build
+sudo mkdir -p /odooku /odooku/cache
 sudo chown -R $USER /odooku
 touch /odooku/env.mk
 
