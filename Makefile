@@ -50,6 +50,8 @@ endef
 new-env:
 	@echo "Creating empty database ${NEW_DATABASE}"
 	@docker exec postgres createdb -U odoo ${NEW_DATABASE}
+	@echo "Creating empty s3 bucket ${NEW_DATABASE}"
+	@mkdir -p /vagrant/data/s3/${NEW_DATABASE}
 	@echo "Updating env"
 	@echo "Admin password: ${NEW_DATABASE}"
 	@echo "$$NEW_ENV" > /odooku/env.mk
@@ -109,6 +111,18 @@ psql:
 		--rm \
 		-it \
 		--net host \
+		-v /vagrant/data:/tmp \
 		-e PGPASSWORD=${DB_PASSWORD} \
 		postgres:9.5 \
 		psql -U ${DB_USER} -w -h ${DB_HOST} -p ${DB_PORT} -d ${DB_NAME}
+
+
+pg-restore:
+	@docker run \
+		--rm \
+		-it \
+		--net host \
+		-v /vagrant/data:/tmp \
+		-e PGPASSWORD=${DB_PASSWORD} \
+		postgres:9.5 \
+		pg_restore -U ${DB_USER} -w -h ${DB_HOST} -p ${DB_PORT} -d ${DB_NAME} --no-owner /tmp/${DB_NAME}.dump

@@ -104,6 +104,30 @@ $$ odooku preload
 $ make run-web
 ```
 
+### Data import from Heroku to Vagrant
+
+Ensure you have a clean environment inside your vagrant machine.
+
+```
+$ make new-env
+$ Creating empty database IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi
+$ Creating empty s3 bucket IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi
+$ Updating env
+$ Admin password: IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi
+```
+
+This created an empty s3 bucket directory '/vagrant/data/s3/IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi', place
+your amazon s3 bucket files in here.
+
+Create a Heroku postgres dump (or any postgres dump), and copy it to
+'/vagrant/data/IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi.dump'.
+
+```
+$ make pg-restore
+$ make run-web
+```
+
+
 ## Database
 Odooku can be run in single database mode, or Odoo's regular behaviour. If a
 database is specified in DATABASE_URL, single database mode is enabled.

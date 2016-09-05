@@ -4,6 +4,9 @@
 
 $TRUSTY = <<SCRIPT
 
+# Prepare vagrant directories
+mkdir -p /vagrant/data/s3
+
 # Herokuish
 sudo docker pull gliderlabs/herokuish
 sudo mkdir -p /odooku /odooku/cache
@@ -33,6 +36,7 @@ sudo docker run \
   --name s3 \
   --restart always \
   -d \
+  -v /vagrant/data/s3:/fakes3_root \
   --net host \
   lphoward/fake-s3
 
