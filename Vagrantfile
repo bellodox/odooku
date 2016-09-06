@@ -4,12 +4,16 @@
 
 $TRUSTY = <<SCRIPT
 
+# Update and install git
+sudo apt-get update \
+  && sudo apt-get install git
+
 # Prepare vagrant directories
 mkdir -p /vagrant/data/s3
 
 # Herokuish
 sudo docker pull gliderlabs/herokuish
-sudo mkdir -p /odooku /odooku/cache
+sudo mkdir -p /odooku /odooku/cache /odooku/app
 sudo chown -R $USER /odooku
 touch /odooku/env.mk
 
@@ -60,7 +64,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: $TRUSTY, privileged: false
 
   config.vm.network "forwarded_port", guest: 8000, host: 8000
-  config.vm.network "forwarded_port", guest: 8443, host: 8443
+  config.vm.network "forwarded_port", guest: 4569, host: 4569
   config.vm.provider "virtualbox" do |vb|
      vb.memory = 2048
      vb.cpus = 2

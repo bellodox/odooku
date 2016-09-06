@@ -25,12 +25,12 @@ define RUN_ARGS
 --net host \
 -v /vagrant:/vagrant \
 -v /odooku:/odooku \
--e DATABASE_URL="${DATABASE_URL}" \
--e REDIS_URL="${REDIS_URL}" \
--e S3_BUCKET="${S3_BUCKET}" \
--e S3_DEV_URL="http://localhost:4569" \
--e PORT="${PORT}" \
--e ODOOKU_ADMIN_PASSWORD="${ADMIN_PASSWORD}" \
+-e DATABASE_URL=${DATABASE_URL} \
+-e REDIS_URL=${REDIS_URL} \
+-e S3_BUCKET=${S3_BUCKET} \
+-e S3_DEV_URL=http://localhost:4569 \
+-e PORT=${PORT} \
+-e ODOOKU_ADMIN_PASSWORD=${ADMIN_PASSWORD} \
 gliderlabs/herokuish
 endef
 
@@ -58,11 +58,15 @@ new-env:
 
 
 build:
+	@echo "Using local commit $$(git rev-parse HEAD)"
+	-@rm -rf /odooku/app
+	@mkdir -p /odooku/app
+	@git archive --format=tar HEAD | (cd /odooku/app/ && tar xf -)
 	@docker run \
 		--rm \
 		-it \
-		-e BUILDPACK_URL="${BUILDPACK_URL}" \
-		-v /vagrant:/tmp/app \
+		-e BUILDPACK_URL=${BUILDPACK_URL} \
+		-v /odooku/app:/tmp/app \
 		-v /odooku/cache:/tmp/cache \
 		-v /odooku:/odooku \
 		gliderlabs/herokuish \
