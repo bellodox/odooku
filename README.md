@@ -116,14 +116,19 @@ $ Updating env
 $ Admin password: IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi
 ```
 
-This created an empty s3 bucket directory '/vagrant/data/s3/IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi', place
-your amazon s3 bucket files in here.
+Move over the existing filestore to http://127.0.0.1:4569. You can use
+an S3 client like Cyberduck and a custom S3 profile for this.
 
-Create a Heroku postgres dump (or any postgres dump), and copy it to
-'/vagrant/data/IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi.dump'.
+https://trac.cyberduck.io/wiki/help/en/howto/s3#GenericS3profiles
+
+
+Create a Heroku postgres dump (or any postgres dump), and move it to
+'/vagrant/IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi.dump'.
 
 ```
 $ make pg-restore
+$ make shell
+$$ odooku preload --new-dbuuid
 $ make run-web
 ```
 
