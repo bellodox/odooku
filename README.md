@@ -138,9 +138,19 @@ Odooku can be run in single database mode, or Odoo's regular behaviour. If a
 database is specified in DATABASE_URL, single database mode is enabled.
 
 ### Backup and Restore
-Backup behaves the same way in both modes. For a restore in single database
-mode, copy paste the name of the existing database, this database will be
-overwritten.
+
+```
+$ heroku run odooku database dump > /vagrant/dump.zip
+$ heroku run odooku database restore < /vagrant/dump.zip
+```
+
+Backup and restore from within the Vagrant development machine:
+
+```
+$ make run CMD='odooku database dump' > /vagrant/dump.zip
+$ make run CMD='odooku database restore' < /vagrant/dump.zip
+```
+
 
 ### Admin password
 Odooku disables the default admin password configuration entry used by Odoo.

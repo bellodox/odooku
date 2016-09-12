@@ -10,6 +10,7 @@ DB_NAME=$(shell echo ${DATABASE_URL} | sed -e 's/^postgres:\/\/.*:.*@.*:.*\/\(.*
 BUILDPACK_URL=https://github.com/adaptivdesign/odooku-buildpack
 
 NEW_DATABASE:=$(shell cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+CMD:=/bin/bash
 
 define NEW_ENV
 DATABASE_URL=postgres://odoo:odoo@localhost:5432/${NEW_DATABASE}
@@ -107,7 +108,17 @@ shell:
 		${RUN_ARGS} \
 		bin/bash -c \
 			"${BASH_INIT} \
-			;USER=herokuishuser /bin/herokuish procfile exec /bin/bash"
+			;USER=herokuishuser /bin/herokuish procfile exec ${CMD}"
+
+
+run:
+	@docker run \
+		--rm -i \
+		--name run \
+		${RUN_ARGS} \
+		bin/bash -c \
+			"${BASH_INIT} \
+			;USER=herokuishuser /bin/herokuish procfile exec ${CMD}"
 
 
 psql:
@@ -115,18 +126,6 @@ psql:
 		--rm \
 		-it \
 		--net host \
-		-v /vagrant/data:/tmp \
 		-e PGPASSWORD=${DB_PASSWORD} \
 		postgres:9.5 \
 		psql -U ${DB_USER} -w -h ${DB_HOST} -p ${DB_PORT} -d ${DB_NAME}
-
-
-pg-restore:
-	@docker run \
-		--rm \
-		-it \
-		--net host \
-		-v /vagrant:/tmp \
-		-e PGPASSWORD=${DB_PASSWORD} \
-		postgres:9.5 \
-		pg_restore -U ${DB_USER} -w -h ${DB_HOST} -p ${DB_PORT} -d ${DB_NAME} --no-owner /tmp/${DB_NAME}.dump
