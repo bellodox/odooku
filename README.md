@@ -140,8 +140,8 @@ database is specified in DATABASE_URL, single database mode is enabled.
 ### Backup and Restore
 
 ```
-$ heroku run odooku database dump --s3 dump.zip
-$ heroku run odooku database restore --s3 dump.zip
+$ heroku run odooku database dump --s3-file dump.zip
+$ heroku run odooku database restore --s3-file dump.zip
 ```
 
 Backup and restore from within the Vagrant development machine:
@@ -150,8 +150,6 @@ Backup and restore from within the Vagrant development machine:
 $ make run CMD='odooku database dump' > /vagrant/dump.zip
 $ make run CMD='odooku database restore' < /vagrant/dump.zip
 ```
-
-
 
 
 ### Admin password
