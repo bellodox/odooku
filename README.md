@@ -151,6 +151,12 @@ $ make run CMD='odooku database dump' > /vagrant/dump.zip
 $ make run CMD='odooku database restore' < /vagrant/dump.zip
 ```
 
+Restore into non empty database:
+
+```
+$ odooku database restore --truncate
+```
+
 
 ### Admin password
 Odooku disables the default admin password configuration entry used by Odoo.

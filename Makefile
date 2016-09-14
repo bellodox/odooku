@@ -29,7 +29,9 @@ define RUN_ARGS
 -e DATABASE_URL=${DATABASE_URL} \
 -e REDIS_URL=${REDIS_URL} \
 -e S3_BUCKET=${S3_BUCKET} \
--e S3_DEV_URL=http://localhost:4569 \
+-e S3_ENDPOINT_URL=http://localhost:4569 \
+-e AWS_ACCESS_KEY_ID=foobar \
+-e AWS_SECRET_ACCESS_KEY=foobar \
 -e PORT=${PORT} \
 -e ODOOKU_ADMIN_PASSWORD=${ADMIN_PASSWORD} \
 gliderlabs/herokuish
@@ -37,13 +39,10 @@ endef
 
 
 define BASH_INIT
-echo '-----> Importing slug' \
-;/bin/herokuish slug import < /odooku/slug.tar.gz \
+/bin/herokuish slug import < /odooku/slug.tar.gz \
 ;[[ -d /vagrant/addons ]] \
-	&& echo '-----> Mounting addons' \
 	&& rm -rf /app/addons \
 	&& ln -s /vagrant/addons /app/addons \
-	&& echo '-----> Enabling dev mode' \
 	&& export ODOOKU_DEV=true
 endef
 
