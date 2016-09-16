@@ -42,7 +42,7 @@ sudo docker run \
   lphoward/fake-s3
 
 sleep 10
-cd /vagrant && sudo make new-env
+cd /vagrant && make new-env
 
 SCRIPT
 

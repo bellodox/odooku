@@ -27,6 +27,6 @@
     }
   },
   "scripts": {
-    "postdeploy": "odooku preload"
+    "postdeploy": "odooku database preload"
   }
 }
