@@ -9,13 +9,10 @@ sudo apt-get -y update \
   && sudo apt-get -y install git
 
 # Herokuish
-sudo docker pull gliderlabs/herokuish
-sudo mkdir -p /odooku /odooku/cache /odooku/app /odooku/filestore
-sudo chown -R $USER /odooku
-touch /odooku/env.mk
+docker pull gliderlabs/herokuish
 
 # Postgresql
-sudo docker run \
+docker run \
   --name postgres \
   --restart always \
   -e POSTGRES_PASSWORD=odoo \
@@ -25,7 +22,7 @@ sudo docker run \
   postgres:9.5
 
 # Redis
-sudo docker run \
+docker run \
   --name redis \
   --restart always \
   -d \
@@ -33,16 +30,22 @@ sudo docker run \
   redis
 
 # S3
-sudo docker run \
+docker run \
   --name s3 \
   --restart always \
   -d \
-  -v /odooku/filestore:/fakes3_root \
+  -v /odooku/s3:/fakes3_root \
   --net host \
   lphoward/fake-s3
 
-sleep 10
-cd /vagrant && make new-env
+
+sudo tee /etc/environment -a > /dev/null <<EOF
+ODOOKU_LOCAL_PREFIX=/home/$USER/odooku
+ODOOKU_SHARE_DIR=/vagrant
+EOF
+source /etc/environment
+
+cd /vagrant/dev && ./manage env new && ./manage pg createdb
 
 SCRIPT
 
@@ -57,14 +60,15 @@ Vagrant.configure(2) do |config|
   # https://docs.vagrantup.com.
 
   config.vm.box = "box-cutter/ubuntu1404-docker"
-  config.vm.synced_folder '.', '/vagrant'
+  config.vm.synced_folder '../', '/vagrant'
   config.vm.provision "shell", inline: $TRUSTY, privileged: false
 
   config.vm.network "forwarded_port", guest: 8000, host: 8000
+  config.vm.network "forwarded_port", guest: 8001, host: 8001
   config.vm.network "forwarded_port", guest: 4569, host: 4569
-  config.vm.provider "virtualbox" do |vb|
-     vb.memory = 2048
-     vb.cpus = 2
+  config.vm.provider "virtualbox" do |provider|
+     provider.memory = 4096
+     provider.cpus = 2
   end
 
 end
