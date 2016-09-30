@@ -45,7 +45,7 @@ ODOOKU_SHARE_DIR=/vagrant
 EOF
 source /etc/environment
 
-cd /vagrant/dev && ./manage env new && ./manage pg createdb
+cd /vagrant && ./manage env new && ./manage pg createdb
 
 SCRIPT
 
