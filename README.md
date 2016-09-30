@@ -46,7 +46,7 @@ usign the 'odooku preload' command. Database initialization using a web worker
 is possible however.
 
 ```
-$ heroku run odooku preload [--demo-data]
+$ heroku run odooku database preload [--demo-data]
 ```
 
 ### CRON worker
@@ -73,65 +73,42 @@ created by the 'new-env' command.
 $ vagrant up
 $ vagrant ssh
 $ cd /vagrant
-$ make build
-$ make run-web
+$ ./manage build
+$ ./manage run web
 ```
 
 ### Run a worker in vagrant
 
 ```
-$ make run-worker
+$ ./manage run worker
 ```
 
 ### Enter a shell
 
 ```
-$ make shell
+$ ./manage run shell
+```
+
+### Execute a command
+
+```
+$ ./manage run exec <command>
 ```
 
 ### Psql access
 
 ```
-$ make psql
+$ ./manage pg psql
 ```
 
 ### Create new database and S3 bucket
 
 ```
-$ make new-env
-$ make shell
-$$ odooku preload
+$ ./manage env new
+$ ./manage pg createdb
+$ ./manage run exec odooku database preload
 $ make run-web
 ```
-
-### Data import from Heroku to Vagrant
-
-Ensure you have a clean environment inside your vagrant machine.
-
-```
-$ make new-env
-$ Creating empty database IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi
-$ Creating empty s3 bucket IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi
-$ Updating env
-$ Admin password: IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi
-```
-
-Move over the existing filestore to http://127.0.0.1:4569. You can use
-an S3 client like Cyberduck and a custom S3 profile for this.
-
-https://trac.cyberduck.io/wiki/help/en/howto/s3#GenericS3profiles
-
-
-Create a Heroku postgres dump (or any postgres dump), and move it to
-'/vagrant/IaW83Twq0gv8rGTemVkno4Dt8g1yfjXi.dump'.
-
-```
-$ make pg-restore
-$ make shell
-$$ odooku preload --new-dbuuid
-$ make run-web
-```
-
 
 ## Database
 Odooku can be run in single database mode, or Odoo's regular behaviour. If a
@@ -147,8 +124,8 @@ $ heroku run odooku database restore --s3-file dump.zip
 Backup and restore from within the Vagrant development machine:
 
 ```
-$ make run CMD='odooku database dump' > /vagrant/dump.zip
-$ make run CMD='odooku database restore' < /vagrant/dump.zip
+$ ./manage run exec odooku database dump > /vagrant/dump.zip
+$ ./manage run exec odooku database restore < /vagrant/dump.zip
 ```
 
 Restore into non empty database:
@@ -163,4 +140,23 @@ Odooku disables the default admin password configuration entry used by Odoo.
 
 ```
 $ heroku config:set ODOOKU_ADMIN_PASSWORD=<your_password>
+```
+
+## New Relic
+Odooku can integrate with New Relic make sure to modify your requirements.txt.
+
+The following environment variables are available:
+
+- NEW_RELIC_LICENSE_KEY (required)
+- NEW_RELIC_CONFIG_FILE
+
+```
+# requirements.txt
+newrelic
+...
+
+
+$ heroku config:set NEW_RELIC_LICENSE_KEY=<your_newrelic_license_key>
+$ ./manage env set NEW_RELIC_LICENSE_KEY=<your_newrelic_license_key>
+
 ```
