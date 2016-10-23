@@ -60,7 +60,7 @@ Vagrant.configure(2) do |config|
   # https://docs.vagrantup.com.
 
   config.vm.box = "box-cutter/ubuntu1404-docker"
-  config.vm.synced_folder '../', '/vagrant'
+  config.vm.synced_folder '.', '/vagrant'
   config.vm.provision "shell", inline: $TRUSTY, privileged: false
 
   config.vm.network "forwarded_port", guest: 8000, host: 8000
