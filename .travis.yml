@@ -11,7 +11,7 @@ before_install:
   - export PATH=$PATH:/opt/devoku/bin/
 
 before_script:
-  - devoku service postgres start
+  - devoku service postgres up
   - devoku env new
   - devoku build
   - devoku pg createdb
