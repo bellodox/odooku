@@ -6,8 +6,8 @@ services:
   - docker
 
 before_install:
-  - curl -L https://api.github.com/repos/adaptivdesign/devoku/tarball | sudo tar xz -C /opt
-  - ls /opt/devoku
+  - sudo mkdir /opt/devoku
+  - curl -L https://api.github.com/repos/adaptivdesign/devoku/tarball | sudo tar xz -C /opt/devoku
   - export PATH=$PATH:/opt/devoku/bin/
 
 before_script:
