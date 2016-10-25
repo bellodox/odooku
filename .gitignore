@@ -1,5 +1,6 @@
 .vagrant
 .bundle
+.devoku
 *.dump
 
 # Byte-compiled / optimized / DLL files
