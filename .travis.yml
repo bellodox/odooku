@@ -7,7 +7,7 @@ services:
 
 before_install:
   - sudo mkdir /opt/devoku
-  - curl -L https://api.github.com/repos/adaptivdesign/devoku/tarball | sudo tar xz -C /opt/devoku
+  - curl -L https://api.github.com/repos/adaptivdesign/devoku/tarball | sudo tar xz --strip-components=1 -C /opt/devoku
   - export PATH=$PATH:/opt/devoku/bin/
 
 before_script:
