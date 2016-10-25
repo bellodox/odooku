@@ -7,7 +7,8 @@ services:
 
 before_install:
   - curl -L https://api.github.com/repos/adaptivdesign/devoku/tarball | sudo tar xz -C /opt
-  - export PATH=$PATH:/opt/devoku/bin
+  - ls /opt/devoku
+  - export PATH=$PATH:/opt/devoku/bin/
 
 before_script:
   - devoku service postgres start
