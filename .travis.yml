@@ -17,4 +17,4 @@ before_script:
   - devoku pg createdb
 
 script:
-  - devoku run odooku preload --demo-data
+  - devoku run odooku database preload --demo-data
