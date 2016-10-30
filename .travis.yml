@@ -13,8 +13,8 @@ before_install:
 before_script:
   - devoku service postgres up
   - devoku env new
-  - devoku build
   - devoku pg createdb
+  - devoku build
 
 script:
-  - devoku run odooku database preload --demo-data
+  - devoku run odooku runtests
