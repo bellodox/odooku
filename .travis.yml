@@ -17,4 +17,4 @@ before_script:
   - devoku build
 
 script:
-  - devoku run odooku runtests
+  - devoku run odooku runtests --module website --module sale --module account
