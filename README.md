@@ -8,6 +8,7 @@ Run Odoo on Heroku.
 ```
 $ heroku create --buildpack https://github.com/adaptivdesign/odooku-buildpack
 $ heroku addons:create heroku-postgresql:hobby-basic
+$ heroku addons:create heroku-redis:hobby-dev
 $ heroku config:set AWS_ACCESS_KEY_ID=<your_aws_key>
 $ heroku config:set AWS_SECRET_ACCESS_KEY=<your_aws_secret>
 $ heroku config:set S3_BUCKET=<your_s3_bucket_name>
