@@ -12,6 +12,8 @@ before_install:
 
 before_script:
   - devoku service postgres up
+  - devoku service s3 up
+  - devoku servic redis up
   - sleep 15
   - devoku env new
   - devoku env print
