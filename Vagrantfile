@@ -27,6 +27,7 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 8000, host: 8000
   config.vm.network "forwarded_port", guest: 4569, host: 4569
   config.vm.provider "virtualbox" do |provider|
+     provider.customize ["modifyvm", :id, "--cableconnected1", "on"]
      provider.memory = 2048
      provider.cpus = 2
   end
