@@ -13,6 +13,7 @@ before_install:
 before_script:
   - devoku service postgres up
   - devoku env new
+  - devoku env print
   - devoku pg createdb
   - devoku build
 
