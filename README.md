@@ -1,12 +1,14 @@
 ![Odooku](https://cdn.rawgit.com/adaptivdesign/odooku/master/img.svg "Odooku")
 
+[![Build Status](https://travis-ci.org/adaptivdesign/odooku.svg?branch=9.0)](https://travis-ci.org/adaptivdesign/odooku)
+
 # Odooku
 Run Odoo on Heroku.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ```
-$ heroku create --buildpack https://github.com/adaptivdesign/odooku-buildpack
+$ heroku create --buildpack https://github.com/adaptivdesign/odooku-buildpack.git#9.0
 $ heroku addons:create heroku-postgresql:hobby-basic
 $ heroku addons:create heroku-redis:hobby-dev
 $ heroku config:set AWS_ACCESS_KEY_ID=<your_aws_key>
@@ -81,48 +83,28 @@ $ odooku cron --once
 
 ## Vagrant development machine
 A vagrant machine is provivded for development purposes. It fully emulates
-the Heroku environment. A random database, S3 bucket and admin password are
-created by the 'new-env' command.
+the Heroku environment.
 
 ```
 $ vagrant up
 $ vagrant ssh
+$ devoku service postgres up
+$ devoku service redis up
+$ devoku service s3 up
 $ cd /vagrant
-$ ./manage build
-$ ./manage run web
-```
-
-### Run a worker in vagrant
-
-```
-$ ./manage run worker
-```
-
-### Enter a shell
-
-```
-$ ./manage run shell
-```
-
-### Execute a command
-
-```
-$ ./manage run exec <command>
-```
-
-### Psql access
-
-```
-$ ./manage pg psql
+$ devoku env new
+$ devoku build
+$ devoku pg createdb
+$ devoku web
 ```
 
 ### Create new database and S3 bucket
 
 ```
-$ ./manage env new
-$ ./manage pg createdb
-$ ./manage run exec odooku database preload
-$ make run-web
+$ devoku env new
+$ devoku pg createdb
+$ devoku run odooku database preload
+$ devoku web
 ```
 
 ## Database
@@ -139,16 +121,9 @@ $ heroku run odooku database restore --s3-file dump.zip
 Backup and restore from within the Vagrant development machine:
 
 ```
-$ ./manage run exec odooku database dump > /vagrant/dump.zip
-$ ./manage run exec odooku database restore < /vagrant/dump.zip
+$ devoku run odooku database dump > /vagrant/dump.zip
+$ devoku run odooku database restore < /vagrant/dump.zip
 ```
-
-Restore into non empty database:
-
-```
-$ odooku database restore --truncate
-```
-
 
 ### Admin password
 Odooku disables the default admin password configuration entry used by Odoo.
@@ -172,6 +147,6 @@ newrelic
 
 
 $ heroku config:set NEW_RELIC_LICENSE_KEY=<your_newrelic_license_key>
-$ ./manage env set NEW_RELIC_LICENSE_KEY=<your_newrelic_license_key>
+$ devoku env set NEW_RELIC_LICENSE_KEY=<your_newrelic_license_key>
 
 ```
