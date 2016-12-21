@@ -1,12 +1,12 @@
 {
   "odoo": {
     "repo": "odoo/odoo",
-    "branch": "9.0",
+    "branch": "10.0",
     "commit": null
   },
   "compat": {
     "repo": "adaptivdesign/odooku-compat",
-    "branch": "9.0",
+    "branch": "10.0",
     "commit": null
   }
 }
