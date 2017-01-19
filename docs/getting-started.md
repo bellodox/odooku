@@ -14,22 +14,28 @@ web: odooku wsgi $PORT
 
 ### odooku.json ###
 
-The Odooku buildpack needs to know which Odoo and `Odooku compat` version
-to fetch.
+The Odooku buildpack needs to know from where to fetch Odoo. This needs
+to a Github repository.
 ```
 {
   "odoo": {
     "repo": "odoo/odoo",
     "branch": "10.0",
     "commit": null
-  },
-  "compat": {
-    "repo": "adaptivdesign/odooku-compat",
-    "branch": "10.0",
-    "commit": null
   }
 }
 
+```
+
+### requirements.txt ###
+
+Requirements file for pip installation. This needs to include a reference
+to the desired `odooku-compat` package. Odoo's requirements are installed
+automatically. For manual installation, create a file named
+`odoo_requirements.txt`.
+
+```
+git+https://github.com/adaptivdesign/odooku-compat.git@10.0
 ```
 
 ### addons ###
