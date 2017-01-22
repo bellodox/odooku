@@ -5,7 +5,7 @@
 # Odooku
 Run Odoo on Heroku, docs at [https://adaptivdesign.github.io/odooku/](https://adaptivdesign.github.io/odooku/).
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/adaptivdesign/odooku/tree/10.0)
 
 ```
 $ heroku create --buildpack https://github.com/adaptivdesign/odooku-buildpack.git#10.0
