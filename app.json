@@ -24,6 +24,10 @@
       "description": "AWS secret access key",
       "value": ""
     },
+    "AWS_REGION": {
+      "description": "AWS region",
+      "value": "us-east-1"
+    },
     "S3_BUCKET": {
       "description": "Amazon S3 bucket for attachment storage",
       "value": ""
