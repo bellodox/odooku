@@ -1,5 +1,5 @@
 Clone the Odooku repository or create your own repository. Odooku is like
-any other Heroku project, however the Odooku buildpack also requires
+any other Python Heroku project, however the Odooku buildpack also requires
 an `odooku.json` file.
 
 ## Project structure
@@ -30,12 +30,12 @@ to a Github repository.
 ### requirements.txt ###
 
 Requirements file for pip installation. This needs to include a reference
-to the desired `odooku-compat` package. Odoo's requirements are installed
-automatically. For manual installation, create a file named
+to the desired `odooku-core` package. Odoo's requirements are installed
+by the buildpack. For manual installation, create a file named
 `odoo_requirements.txt`.
 
 ```
-git+https://github.com/adaptivdesign/odooku-compat.git@10.0
+git+https://github.com/adaptivdesign/odooku-core.git@10.0
 ```
 
 ### addons ###
