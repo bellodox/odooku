@@ -37,6 +37,7 @@ pages:
   - Topics:
     - S3 Storage: topics/s3.md
     - SSL: topics/s3.md
+    - Redirection: topics/websockets.md
     - Scaling: topics/scaling.md
     - Databases: topics/databases.md
     - Security: topics/security.md
