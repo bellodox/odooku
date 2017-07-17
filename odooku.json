@@ -1,6 +1,6 @@
 {
   "odoo": {
-    "repo": "Prescrypto/odoo",
+    "repo": "odoo/odoo",
     "branch": "10.0",
     "commit": null
   }
