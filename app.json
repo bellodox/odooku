@@ -9,7 +9,7 @@
   ],
   "buildpacks": [
     {
-      "url": "https://github.com/adaptivdesign/odooku-buildpack.git#10.0"
+      "url": "https://github.com/Prescrypto/odooku-buildpack.git#submodules-fetch"
     }
   ],
   "addons": [
