@@ -1,19 +1,30 @@
-![Odooku](https://cdn.rawgit.com/adaptivdesign/odooku/master/img.svg "Odooku")
-
-[![Build Status](https://travis-ci.org/adaptivdesign/odooku.svg?branch=10.0)](https://travis-ci.org/adaptivdesign/odooku)
-
 # Odooku
-Run Odoo on Heroku, docs at [https://adaptivdesign.github.io/odooku/](https://adaptivdesign.github.io/odooku/).
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/adaptivdesign/odooku/tree/10.0)
+> Odoo en la plataforma Heroku
 
-```
-$ heroku create --buildpack https://github.com/adaptivdesign/odooku-buildpack.git#10.0
+```sh
+HEROKU_PROJECT="erste-staging"
+
+# Crear proyecto en Heroku
+heroku create $HEROKU_PROJECT
+
+# Agregar buildpacks
+heroku buildpacks:add https://github.com/adaptivdesign/odooku-buildpack.git#10.0 --index 1 --app $HEROKU_PROJECT
+heroku buildpacks:add https://github.com/SectorLabs/heroku-buildpack-git-submodule.git --index 2 --app $HEROKU_PROJECT
+
+# Configurar variables de entorno
+heroku --app $HEROKU_PROJECT config:set GIT_REPO_URL=git@github.com:Prescrypto/odooku
+heroku --app $HEROKU_PROJECT config:set GIT_SSH_KEY="<id_rsa>"
+heroku --app $HEROKU_PROJECT config:set AWS_ACCESS_KEY_ID=<key_de_aws>
+heroku --app $HEROKU_PROJECT config:set AWS_SECRET_ACCESS_KEY=<secreto_de_aws>
+heroku --app $HEROKU_PROJECT config:set AWS_REGION=<region_de_aws>
+heroku --app $HEROKU_PROJECT config:set S3_BUCKET=<bucket_de_s3>
+
+
+# agregar addons requeridos
 $ heroku addons:create heroku-postgresql:hobby-basic
 $ heroku addons:create heroku-redis:hobby-dev
-$ heroku config:set AWS_ACCESS_KEY_ID=<your_aws_key>
-$ heroku config:set AWS_SECRET_ACCESS_KEY=<your_aws_secret>
-$ heroku config:set AWS_REGION=<your_aws_region>
-$ heroku config:set S3_BUCKET=<your_s3_bucket_name>
-$ git push heroku master
+
+# deploy
+git push heroku master
 ```
