@@ -10,6 +10,9 @@
   "buildpacks": [
     {
       "url": "https://github.com/Prescrypto/odooku-buildpack.git#submodules-fetch"
+    },
+    {
+      "url": "https://github.com/SectorLabs/heroku-buildpack-git-submodule.git"
     }
   ],
   "addons": [
@@ -30,6 +33,18 @@
     },
     "S3_BUCKET": {
       "description": "Amazon S3 bucket for attachment storage",
+      "value": ""
+    },
+    "GIT_REPO_URL": {
+      "description": "Git SSH url to fetch submodules",
+      "value": ""
+    },
+    "GIT_SSH_Key": {
+      "description": "Git SSH key",
+      "value": ""
+    },
+    "ODOOKU_ADMIN_PASSWORD": {
+      "description": "Default admin password for Odoo",
       "value": ""
     }
   },
