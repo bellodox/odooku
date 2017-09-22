@@ -1,3 +1,3 @@
-[submodule "addons/campos-clientes-vittal"]
-	path = addons/campos-clientes-vittal
+[submodule "addons/campos_clientes_vittal"]
+	path = addons/campos_clientes_vittal
 	url = git@github.com:Prescrypto/campos-clientes-vittal.git
