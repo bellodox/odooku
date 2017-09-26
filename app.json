@@ -39,7 +39,7 @@
       "description": "Git SSH url to fetch submodules",
       "value": ""
     },
-    "GIT_SSH_Key": {
+    "GIT_SSH_KEY": {
       "description": "Git SSH key",
       "value": ""
     },
