@@ -42,10 +42,6 @@
     "GIT_SSH_KEY": {
       "description": "Git SSH key",
       "value": ""
-    },
-    "ODOOKU_ADMIN_PASSWORD": {
-      "description": "Default admin password for Odoo",
-      "value": ""
     }
   },
   "scripts": {
