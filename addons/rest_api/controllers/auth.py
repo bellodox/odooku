@@ -61,19 +61,11 @@ class ControllerREST(http.Controller):
         # Convert http data into json:
         jdata = json.loads(request.httprequest.stream.read())
 
-        db = jdata['db']
         username = jdata['username']
         password = jdata['password']
 
-        # Compare dbname (from HTTP-request vs. Odoo config):
-        if db and (db != request._cr.dbname):
-            error_descrip = "Wrong 'dbname'!"
-            error = 'wrong_dbname'
-            _logger.error(error_descrip)
-            return error_response(400, error, error_descrip)
-
         # Empty 'db' or 'username' or 'password:
-        if not db or not username or not password:
+        if not username or not password:
             error_descrip = "Empty value of 'db' or 'username' or 'password'!"
             error = 'empty_db_or_username_or_password'
             _logger.error(error_descrip)
@@ -81,7 +73,7 @@ class ControllerREST(http.Controller):
 
         # Login in Odoo database:
         try:
-            request.session.authenticate(db, username, password)
+            request.session.authenticate(request._cr.dbname, username, password)
         except:
             # Invalid database:
             error_descrip = "Invalid database!"
