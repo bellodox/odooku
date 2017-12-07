@@ -461,15 +461,12 @@ else:
     try:
         _db_uri = os.environ["DATABASE_URL"]
         result = urlparse.urlparse(_db_uri)
-        _username = result.username
-        _password = result.password
         _database = result.path[1:]
-        _hostname = result.hostname
         db_connect = psycopg2.connect(
             database = _database,
-            user = _username,
-            password = _password,
-            host = _hostname
+            user = result.username,
+            password = result.password,
+            host = result.hostname
         )
     except Exception as e:
         # Not found db URI
@@ -494,34 +491,51 @@ else:
         res = cr.fetchone()
         refresh_token_expires_in = res and int(res[0])
         # ... of Redis server
-        cr.execute("SELECT value FROM ir_config_parameter \
-            WHERE key = 'redis_host'")
-        res = cr.fetchone()
-        redis_host = res and res[0]
-        cr.execute("SELECT value FROM ir_config_parameter \
-            WHERE key = 'redis_port'")
-        res = cr.fetchone()
-        redis_port = res and res[0]
-        cr.execute("SELECT value FROM ir_config_parameter \
-            WHERE key = 'redis_db'")
-        res = cr.fetchone()
-        redis_db = res and res[0]
-        cr.execute("SELECT value FROM ir_config_parameter \
-            WHERE key = 'redis_password'")
-        res = cr.fetchone()
-        redis_password = res and res[0]
-        if redis_password in ('None', 'False'):
-            redis_password = None
-        # Setup Redis token store and resources:
-        if redis_host and redis_port:
+        try:
+            _redis_uri = os.environ["REDISTOGO_URL"]
+        except:
+            _redis_uri = False
+
+        if _redis_uri:
+            # logic to connect with redistogo uri
             import redisdb
+            result = urlparse.urlparse(_redis_uri)
             token_store = redisdb.RedisTokenStore(
-                                    host = redis_host,
-                                    port = redis_port,
-                                    db = redis_db,
-                                    password = redis_password)
+                        host = result.hostname,
+                        port = result.port,
+                        password = result.password)
             import resources
+
         else:
-            _logger.warning("WARNING: It's necessary to RESTART Odoo server after the installation of 'rest_api' module!")
-            print "WARNING: It's necessary to RESTART Odoo server after the installation of 'rest_api' module!"
+            # check database connect to redis
+            cr.execute("SELECT value FROM ir_config_parameter \
+                WHERE key = 'redis_host'")
+            res = cr.fetchone()
+            redis_host = res and res[0]
+            cr.execute("SELECT value FROM ir_config_parameter \
+                WHERE key = 'redis_port'")
+            res = cr.fetchone()
+            redis_port = res and res[0]
+            cr.execute("SELECT value FROM ir_config_parameter \
+                WHERE key = 'redis_db'")
+            res = cr.fetchone()
+            redis_db = res and res[0]
+            cr.execute("SELECT value FROM ir_config_parameter \
+                WHERE key = 'redis_password'")
+            res = cr.fetchone()
+            redis_password = res and res[0]
+            if redis_password in ('None', 'False'):
+                redis_password = None
+            # Setup Redis token store and resources:
+            if redis_host and redis_port:
+                import redisdb
+                token_store = redisdb.RedisTokenStore(
+                                        host = redis_host,
+                                        port = redis_port,
+                                        db = redis_db,
+                                        password = redis_password)
+                import resources
+            else:
+                _logger.warning("WARNING: It's necessary to RESTART Odoo server after the installation of 'rest_api' module!")
+                print "WARNING: It's necessary to RESTART Odoo server after the installation of 'rest_api' module!"
 
