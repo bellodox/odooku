@@ -54,31 +54,31 @@ OUT__auth_deletetokens__SUCCESS_CODE = 200          # editable
 # HTTP controller of REST resources:
 
 class ControllerREST(http.Controller):
-    
+
     # Login in Odoo database and get access tokens:
     @http.route('/api/auth/get_tokens', methods=['POST'], type='http', auth='none', csrf=False)
     def api_auth_gettokens(self):
         # Convert http data into json:
         jdata = json.loads(request.httprequest.stream.read())
-        
+
         db = jdata['db']
         username = jdata['username']
         password = jdata['password']
-        
+
         # Compare dbname (from HTTP-request vs. Odoo config):
-        if db and (db != db_name):
+        if db and (db != request._cr.dbname):
             error_descrip = "Wrong 'dbname'!"
             error = 'wrong_dbname'
             _logger.error(error_descrip)
             return error_response(400, error, error_descrip)
-        
+
         # Empty 'db' or 'username' or 'password:
         if not db or not username or not password:
             error_descrip = "Empty value of 'db' or 'username' or 'password'!"
             error = 'empty_db_or_username_or_password'
             _logger.error(error_descrip)
             return error_response(400, error, error_descrip)
-        
+
         # Login in Odoo database:
         try:
             request.session.authenticate(db, username, password)
@@ -88,22 +88,22 @@ class ControllerREST(http.Controller):
             error = 'invalid_database'
             _logger.error(error_descrip)
             return error_response(400, error, error_descrip)
-        
+
         uid = request.session.uid
-        
+
         # Odoo login failed:
         if not uid:
             error_descrip = "Odoo User authentication failed!"
             error = 'odoo_user_authentication_failed'
             _logger.error(error_descrip)
             return error_response(401, error, error_descrip)
-        
+
         # Generate tokens
         access_token = generate_token()
         expires_in = access_token_expires_in
         refresh_token = generate_token()
         refresh_expires_in = refresh_token_expires_in
-        
+
         # Save all tokens in store
         _logger.info("Save OAuth2 tokens of user in Redis store...")
         token_store.save_all_tokens(
@@ -112,7 +112,7 @@ class ControllerREST(http.Controller):
             refresh_token = refresh_token,
             refresh_expires_in = refresh_expires_in,
             user_id = uid)
-        
+
         # Successful response:
         return werkzeug.wrappers.Response(
             status = OUT__auth_gettokens__SUCCESS_CODE,
@@ -128,7 +128,7 @@ class ControllerREST(http.Controller):
                 'refresh_token':        refresh_token,
                 'refresh_expires_in':   refresh_expires_in, }),
         )
-    
+
     # Refresh access token:
     @http.route('/api/auth/refresh_token', methods=['POST'], type='http', auth='none', csrf=False)
     def api_auth_refreshtoken(self):
@@ -144,16 +144,16 @@ class ControllerREST(http.Controller):
             error = 'no_refresh_token'
             _logger.error(error_descrip)
             return error_response(400, error, error_descrip)
-        
+
         # Validate refresh token
         refresh_token_data = token_store.fetch_by_refresh_token(refresh_token)
         if not refresh_token_data:
             return error_response_401__invalid_token()
-        
+
         old_access_token = refresh_token_data['access_token']
         new_access_token = generate_token()
         uid = refresh_token_data['user_id']
-        
+
         # Update access (and refresh) token in store
         token_store.update_access_token(
             old_access_token = old_access_token,
@@ -161,7 +161,7 @@ class ControllerREST(http.Controller):
             expires_in = access_token_expires_in,
             refresh_token = refresh_token,
             user_id = uid)
-        
+
         # Successful response:
         return werkzeug.wrappers.Response(
             status = OUT__auth_refreshtoken__SUCCESS_CODE,
@@ -172,7 +172,7 @@ class ControllerREST(http.Controller):
                 'access_token': new_access_token,
             }),
         )
-    
+
     # Delete access tokens from token store:
     @http.route('/api/auth/delete_tokens', methods=['POST'], type='http', auth='none', csrf=False)
     def api_auth_deletetokens(self):
@@ -188,12 +188,12 @@ class ControllerREST(http.Controller):
             error = 'no_refresh_token'
             _logger.error(error_descrip)
             return error_response(400, error, error_descrip)
-        
+
         token_store.delete_all_tokens_by_refresh_token(refresh_token)
-        
+
         # Successful response:
         return successful_response(
             OUT__auth_deletetokens__SUCCESS_CODE,
             {}
         )
-    
+

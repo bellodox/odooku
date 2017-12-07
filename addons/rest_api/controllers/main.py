@@ -453,7 +453,7 @@ def generate_token(length=40):
 
 # Read OAuth2 constants and setup Redis token store:
 db_connect = False
-
+db_name = ""
 if odoo.tools.config.get('db_name'):
     db_name = odoo.tools.config.get('db_name')
     db_connect = RegistryManager.get(db_name)
