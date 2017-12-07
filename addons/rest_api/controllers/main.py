@@ -3,6 +3,8 @@ import functools
 import hashlib
 import logging
 import os
+import psycopg2
+import urlparse
 from ast import literal_eval
 try:
     import simplejson as json
@@ -25,16 +27,16 @@ def get_fields_values_from_model(modelname, domain, fields_list, offset=0, limit
     cr, uid = request.cr, request.session.uid
     cr._cnx.set_isolation_level(ISOLATION_LEVEL_READ_COMMITTED)
     Model = request.env(cr, uid)[modelname]
-    
+
     records = Model.search(domain, offset=offset, limit=limit, order=order)
     if not records:
         return {}
     result = []
     for record in records:
         result += [get_fields_values_from_one_record(record, fields_list)]
-    
+
     return result
-    
+
 def get_fields_values_from_one_record(record, fields_list):
     result = {}
     for field in fields_list:
@@ -45,12 +47,12 @@ def get_fields_values_from_one_record(record, fields_list):
                 val = val.id
             except:
                 pass
-            
+
             result[field] = val  if (val or '0' in str(val))  else None
         else:
             # Sample for One2many field: ('bank_ids', [('id', 'acc_number', 'bank_bic')])
             f_name, f_list = field[0], field[1]
-            
+
             if type(f_list) == list:
                 # Many (list of) records
                 f_list = f_list[0]
@@ -65,16 +67,16 @@ def get_fields_values_from_one_record(record, fields_list):
                 if type(f_list) == str:
                     f_list = (f_list,)
                 result[f_name] = get_fields_values_from_one_record(rec, f_list)
-            
+
     return result
 
 def convert_values_from_jdata_to_vals(modelname, jdata, creating=True):
     cr, uid = request.cr, request.session.uid
     Model = request.env(cr, uid)[modelname]
-    
+
     x2m_fields = [f  for f in jdata  if type(jdata[f])==list]
     f_props = Model.fields_get(x2m_fields)
-    
+
     vals = {}
     for field in jdata:
         val = jdata[field]
@@ -91,12 +93,12 @@ def convert_values_from_jdata_to_vals(modelname, jdata, creating=True):
             if (not creating) and (field_type == 'many2many'):
                 # unlink all previous 'ids'
                 vals[field].append((5,))
-            
+
             for jrec in val:
                 rec = {}
                 for f in jrec:
                     rec[f] = jrec[f]
-                
+
                 if field_type == 'one2many':
                     if creating:
                         vals[field].append((0, 0, rec))
@@ -113,7 +115,7 @@ def convert_values_from_jdata_to_vals(modelname, jdata, creating=True):
                         else:
                             # create record
                             vals[field].append((0, 0, rec))
-                
+
                 elif field_type == 'many2many':
                     # link current existing 'id'
                     vals[field].append((4, rec['id']))
@@ -352,7 +354,7 @@ def check_permissions(func):
     @functools.wraps(func)
     def wrapper(self, *args, **kwargs):
         _logger.info("Check permissions...")
-        
+
         # Get access token from http header
         access_token = request.httprequest.headers.get('access_token')
         if not access_token:
@@ -360,15 +362,15 @@ def check_permissions(func):
             error = 'no_access_token'
             _logger.error(error_descrip)
             return error_response(400, error, error_descrip)
-        
+
         # Validate access token
         access_token_data = token_store.fetch_by_access_token(access_token)
         if not access_token_data:
             return error_response_401__invalid_token()
-        
+
         # Set session UID from current access token
         request.session.uid = access_token_data['user_id']
-        
+
         # The code, following the decorator
         return func(self, *args, **kwargs)
     return wrapper
@@ -450,14 +452,38 @@ def generate_token(length=40):
 
 
 # Read OAuth2 constants and setup Redis token store:
-db_name = odoo.tools.config.get('db_name')
-if not db_name:
+db_connect = False
+
+if odoo.tools.config.get('db_name'):
+    db_name = odoo.tools.config.get('db_name')
+    db_connect = RegistryManager.get(db_name)
+else:
+    try:
+        _db_uri = os.environ["DATABASE_URL"]
+        result = urlparse.urlparse(_db_uri)
+        _username = result.username
+        _password = result.password
+        _database = result.path[1:]
+        _hostname = result.hostname
+        db_connect = psycopg2.connect(
+            database = _database,
+            user = _username,
+            password = _password,
+            host = _hostname
+        )
+    except Exception as e:
+        # Not found db URI
+        _logger.error("[ERROR api rest]: {}, type: {}".format(e, type(e)))
+        db_connect = False
+
+
+if not db_connect:
     _logger.error("ERROR: To proper setup OAuth2 and Redis - it's necessary to set the parameter 'db_name' in Odoo config file!")
     print "ERROR: To proper setup OAuth2 and Redis - it's necessary to set the parameter 'db_name' in Odoo config file!"
+
 else:
     # Read system parameters...
-    registry = RegistryManager.get(db_name)
-    with registry.cursor() as cr:
+    with db_connect.cursor() as cr:
         # ... of OAuth2 tokens
         cr.execute("SELECT value FROM ir_config_parameter \
             WHERE key = 'oauth2_access_token_expires_in'")
