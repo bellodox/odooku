@@ -37,6 +37,12 @@ OUT__res_partner__read_all__SUCCESS_CODE = 200      # editable
 OUT__res_partner__read_all__JSON = (                # editable
     'id',
     'name',
+    'street',
+    'street2',
+    'city',
+    'zip',
+    'phone',
+    'email',
 )
 #           ]
 #       }
@@ -136,7 +142,7 @@ OUT__res_partner__call_method__SUCCESS_CODE = 200   # editable
 # HTTP controller of REST resources:
 
 class ControllerREST(http.Controller):
-    
+
     # Read all (with optional filters, offset, limit, order):
     @http.route('/api/res.partner', methods=['GET'], type='http', auth='none')
     @check_permissions
@@ -147,7 +153,7 @@ class ControllerREST(http.Controller):
             success_code = OUT__res_partner__read_all__SUCCESS_CODE,
             OUT_fields = OUT__res_partner__read_all__JSON
         )
-    
+
     # Read one:
     @http.route('/api/res.partner/<id>', methods=['GET'], type='http', auth='none')
     @check_permissions
@@ -158,7 +164,7 @@ class ControllerREST(http.Controller):
             success_code = OUT__res_partner__read_one__SUCCESS_CODE,
             OUT_fields = OUT__res_partner__read_one__JSON
         )
-    
+
     # Create one:
     @http.route('/api/res.partner', methods=['POST'], type='http', auth='none', csrf=False)
     @check_permissions
@@ -169,7 +175,7 @@ class ControllerREST(http.Controller):
             success_code = OUT__res_partner__create_one__SUCCESS_CODE,
             OUT_fields = OUT__res_partner__create_one__JSON
         )
-    
+
     # Update one:
     @http.route('/api/res.partner/<id>', methods=['PUT'], type='http', auth='none', csrf=False)
     @check_permissions
@@ -179,7 +185,7 @@ class ControllerREST(http.Controller):
             id = id,
             success_code = OUT__res_partner__update_one__SUCCESS_CODE
         )
-    
+
     # Delete one:
     @http.route('/api/res.partner/<id>', methods=['DELETE'], type='http', auth='none', csrf=False)
     @check_permissions
@@ -189,7 +195,7 @@ class ControllerREST(http.Controller):
             id = id,
             success_code = OUT__res_partner__delete_one__SUCCESS_CODE
         )
-    
+
     # Call method (with optional parameters):
     @http.route('/api/res.partner/<id>/<method>', methods=['PUT'], type='http', auth='none', csrf=False)
     @check_permissions
@@ -200,4 +206,4 @@ class ControllerREST(http.Controller):
             method = method,
             success_code = OUT__res_partner__call_method__SUCCESS_CODE
         )
-    
+
