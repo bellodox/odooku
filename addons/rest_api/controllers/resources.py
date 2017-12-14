@@ -10,3 +10,4 @@ import model__res_partner
 import model__sale_order            # need install 'sale' module
 import model__sale_order_line       # need install 'sale' module
 import model__family_member
+import model__company_member
