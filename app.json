@@ -18,7 +18,7 @@
   "addons": [
     "heroku-postgresql:hobby-basic",
     "papertrail",
-    "redistogo:nano",
+    "heroku-redis"
   ],
   "env": {
     "AWS_ACCESS_KEY_ID": {
