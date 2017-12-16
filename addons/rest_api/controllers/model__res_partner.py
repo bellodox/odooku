@@ -44,10 +44,9 @@ OUT__res_partner__read_all__JSON = (                # editable
     'phone',
     'email',
     'zone',
-    'client_type',
-    'legal_name',
-    'business_type'
-
+    'client_type', # Company, Private or Family
+    'legal_name', # If have
+    'business_type', # If is a company
 
 )
 #           ]
@@ -73,6 +72,10 @@ OUT__res_partner__read_one__JSON = (                # editable
     'zip',
     'phone',
     'email',
+    'zone',
+    'client_type',
+    'legal_name',
+    'business_type',
     # many2one fields:
     ('state_id', (
         'id',
