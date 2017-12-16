@@ -44,6 +44,11 @@ OUT__res_partner__read_all__JSON = (                # editable
     'phone',
     'email',
     'zone',
+    'client_type',
+    'legal_name',
+    'business_type'
+
+
 )
 #           ]
 #       }
