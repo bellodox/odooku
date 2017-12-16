@@ -43,6 +43,7 @@ OUT__res_partner__read_all__JSON = (                # editable
     'zip',
     'phone',
     'email',
+    'zone',
 )
 #           ]
 #       }
