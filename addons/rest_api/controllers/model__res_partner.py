@@ -48,16 +48,6 @@ OUT__res_partner__read_all__JSON = (                # editable
     'legal_name', # If have
     'business_type', # If is a company
     'client_export_id', # External ID (use for legacy id)
-    # Address of client
-    ('child_ids', [(
-        'id',
-        'street',
-        'street2',
-        'type',
-        ('sat_colonia_id', (
-            'nombre_colonia',
-        )),
-    )]),
 
 )
 #           ]
@@ -96,6 +86,15 @@ OUT__res_partner__read_one__JSON = (                # editable
         'type',
         ('sat_colonia_id', (
             'nombre_colonia',
+        )),
+        ('sat_municipio_id', (
+            'nombre_municipio',
+        )),
+        ('sat_estado_id', (
+            'nombre_estado',
+        )),
+        ('sat_pais_id', (
+            'nombre_pais',
         )),
     )]),
     # # many2one fields:
