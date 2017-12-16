@@ -47,6 +47,7 @@ OUT__res_partner__read_all__JSON = (                # editable
     'client_type', # Company, Private or Family
     'legal_name', # If have
     'business_type', # If is a company
+    'client_export_id', # External ID (use for legacy id)
 
 )
 #           ]
@@ -76,6 +77,7 @@ OUT__res_partner__read_one__JSON = (                # editable
     'client_type',
     'legal_name',
     'business_type',
+    'client_export_id',
     # many2one fields:
     ('state_id', (
         'id',
