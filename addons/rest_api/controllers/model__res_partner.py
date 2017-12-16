@@ -88,27 +88,32 @@ OUT__res_partner__read_one__JSON = (                # editable
     'legal_name',
     'business_type',
     'client_export_id',
-    # many2one fields:
-    ('state_id', (
+    # Address of client
+    ('child_ids', [(
         'id',
-        'name',
-    )),
-    ('country_id', (
-        'id',
-        'name',
-        'code',
-    )),
-    # one2many fields:
-    ('bank_ids', [(
-        'id',
-        'acc_number',
-        'bank_bic',
+        'street',
+        'street2',
+        'type',
+        ('sat_colonia_id', (
+            'nombre_colonia',
+        )),
     )]),
-    # many2many fields:
-    ('category_id', [(
-        'id',
-        'name',
-    )]),
+    # # many2one fields:
+    # ('state_id', (
+    #     'id',
+    #     'name',
+    # )),
+    # # one2many fields:
+    # ('bank_ids', [(
+    #     'id',
+    #     'acc_number',
+    #     'bank_bic',
+    # )]),
+    # # many2many fields:
+    # ('category_id', [(
+    #     'id',
+    #     'name',
+    # )]),
 )
 
 # /api/res.partner  POST  - Create one
