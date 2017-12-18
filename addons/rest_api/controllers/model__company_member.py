@@ -38,6 +38,15 @@ OUT__company_member__read_all__JSON = (                 # editable
     'id',
     'name',
     'birthday',
+    ('parent_id', (
+        'id',
+        'name',
+        'type',
+    )),
+    'relationship',
+    'allergies',
+    'prev_ailments',
+    'user_active',
 
 )
 #           ]
@@ -54,33 +63,18 @@ OUT__company_member__read_all__JSON = (                 # editable
 OUT__company_member__read_one__SUCCESS_CODE = 200       # editable
 OUT__company_member__read_one__JSON = (                 # editable
     # (The order of fields of different types maybe arbitrary)
-    # simple fields (non relational):
-    'simple_field_1',
-    'simple_field_2',
-
-    # many2one fields:
-
-    # 'many2one_field_1',     # will return just 'id'
-    # OR
-    ('many2one_field_1', (  # will return dictionary of inner fields
-        'inner_field_1',
-        'inner_field_2',
-
+    'id',
+    'name',
+    'birthday',
+    ('parent_id', (
+        'id',
+        'name',
+        'type',
     )),
-
-    # one2many fields:
-    ('one2many_field_1', [(
-        'inner_field_1',
-        'inner_field_2',
-
-    )]),
-
-    # many2many fields:
-    ('many2many_field_1', [(
-        'inner_field_1',
-        'inner_field_2',
-
-    )]),
+    'relationship',
+    'allergies',
+    'prev_ailments',
+    'user_active',
 
 )
 
