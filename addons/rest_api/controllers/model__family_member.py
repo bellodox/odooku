@@ -41,7 +41,6 @@ OUT__family_member__read_all__JSON = (                 # editable
     ('parent_id', (  # will return dictionary of inner fields
         'id',
         'name',
-        'type',
     )),
     'relationship',
     'allergies',
@@ -68,7 +67,6 @@ OUT__family_member__read_one__JSON = (                 # editable
     ('parent_id', (
         'id',
         'name',
-        'type',
     )),
     'relationship',
     'allergies',
