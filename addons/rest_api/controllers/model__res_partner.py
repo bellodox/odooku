@@ -90,6 +90,7 @@ OUT__res_partner__read_one__JSON = (                # editable
         'crosses_with',
         'references',
         'exterior',
+        'details',
         'comment',
         ('sat_colonia_id', (
             'nombre_colonia',
