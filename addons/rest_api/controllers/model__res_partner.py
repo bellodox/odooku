@@ -84,6 +84,12 @@ OUT__res_partner__read_one__JSON = (                # editable
         'street',
         'street2',
         'type',
+        'zip',
+        'city',
+        'cross_street',
+        'crosses_with',
+        'references',
+        'exterior',
         ('sat_colonia_id', (
             'nombre_colonia',
         )),
