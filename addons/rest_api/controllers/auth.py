@@ -74,11 +74,12 @@ class ControllerREST(http.Controller):
         # Login in Odoo database:
         try:
             request.session.authenticate(request._cr.dbname, username, password)
-        except:
+        except Exception as e:
             # Invalid database:
-            error_descrip = "Invalid database!"
-            error = 'invalid_database'
+            error_descrip = "[AUTH ERROR]{}".format(e)
+            error = 'type: {}'.format(type(e))
             _logger.error(error_descrip)
+            _logger.error('DBName: {}'.format(request._cr.dbname))
             return error_response(400, error, error_descrip)
 
         uid = request.session.uid
