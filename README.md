@@ -28,3 +28,5 @@ $ heroku addons:create heroku-redis:hobby-dev
 # deploy
 git push heroku master
 ```
+
+# add rest api module
