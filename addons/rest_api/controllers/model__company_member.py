@@ -41,6 +41,7 @@ OUT__company_member__read_all__JSON = (                 # editable
     ('parent_id', (
         'id',
         'name',
+        'legal_name',
     )),
     'relationship',
     'allergies',
@@ -68,6 +69,7 @@ OUT__company_member__read_one__JSON = (                 # editable
     ('parent_id', (
         'id',
         'name',
+        'legal_name',
     )),
     'relationship',
     'allergies',
