@@ -51,6 +51,7 @@ OUT__res_partner__read_all__JSON = (                # editable
     'reference_id',
     'copago_amount',
     'outstanding',
+    'group_code',
 
 
 )
@@ -85,6 +86,7 @@ OUT__res_partner__read_one__JSON = (                # editable
     'reference_id',
     'copago_amount',
     'outstanding',
+    'group_code',
     # Address of client
     ('child_ids', [(
         'id',
