@@ -48,8 +48,10 @@ OUT__res_partner__read_all__JSON = (                # editable
     'legal_name', # If have
     'business_type', # If is a company
     'client_export_id', # External ID (use for legacy id)
+    'reference_id',
     'copago_amount',
     'outstanding',
+
 
 )
 #           ]
@@ -80,6 +82,7 @@ OUT__res_partner__read_one__JSON = (                # editable
     'legal_name',
     'business_type',
     'client_export_id',
+    'reference_id',
     'copago_amount',
     'outstanding',
     # Address of client
