@@ -46,8 +46,6 @@ OUT__family_member__read_all__JSON = (                 # editable
         'copago_amount',
         'outstanding',
         'group_code',
-        'account_number',
-        'last_contract',
     )),
     'relationship',
     'allergies',
