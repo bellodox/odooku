@@ -90,7 +90,10 @@ OUT__res_partner__read_one__JSON = (                # editable
     'outstanding',
     'group_code',
     'account_number',
-    'last_contract',
+    ('last_contract', (
+        'id',
+        'name',
+    )),
     # Address of client
     ('child_ids', [(
         'id',
