@@ -43,6 +43,7 @@ OUT__res_partner__read_all__JSON = (                # editable
     'zip',
     'phone',
     'email',
+    'zone',
     'client_type', # Company, Private or Family
     'legal_name', # If have
     'business_type', # If is a company
@@ -51,6 +52,8 @@ OUT__res_partner__read_all__JSON = (                # editable
     'copago_amount',
     'outstanding',
     'group_code',
+    'account_number',
+    'last_contract',
 
 
 )
@@ -86,6 +89,11 @@ OUT__res_partner__read_one__JSON = (                # editable
     'copago_amount',
     'outstanding',
     'group_code',
+    'account_number',
+    ('last_contract', (
+        'id',
+        'name',
+    )),
     # Address of client
     ('child_ids', [(
         'id',
