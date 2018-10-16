@@ -41,6 +41,10 @@
       "description": "Git SSH url to fetch submodules",
       "value": ""
     },
+   "ODOOKU_ADDONS": {
+      "description": "odooku addons",
+      "value": ""
+    },
     "GIT_SSH_KEY": {
       "description": "Git SSH key",
       "value": ""
