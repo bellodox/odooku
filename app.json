@@ -16,7 +16,6 @@
     }
   ],
   "addons": [
-    "heroku-postgresql:hobby-basic",
     "papertrail",
     "heroku-redis"
   ],
@@ -39,6 +38,14 @@
     },
     "GIT_REPO_URL": {
       "description": "Git SSH url to fetch submodules",
+      "value": ""
+    },
+   "ODOOKU_ADDONS": {
+      "description": "odooku addons",
+      "value": ""
+    },
+   "DATABASE_URL": {
+      "description": "database url",
       "value": ""
     },
     "GIT_SSH_KEY": {
