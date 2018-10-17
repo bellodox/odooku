@@ -1,1 +1,1 @@
-odooku-odoo-addons>=10.0.0,<11.0.0
+git+https://github.com/Prescrypto/odooku-odoo.git@10.0
