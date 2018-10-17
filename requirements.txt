@@ -1,2 +1,1 @@
-git+https://github.com/Prescrypto/odooku-odoo.git@10.0
-git+https://github.com/valerybriz/odooku.git@10.0
+https://github.com/Prescrypto/odooku-compat.git@10
