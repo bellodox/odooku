@@ -16,7 +16,6 @@
     }
   ],
   "addons": [
-    "heroku-postgresql:hobby-basic",
     "papertrail",
     "heroku-redis"
   ],
