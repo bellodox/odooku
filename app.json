@@ -17,12 +17,7 @@
   ],
   "addons": [
     "papertrail",
-    "heroku-redis",
-    {
-    "plan": "heroku-postgresql",
-      "options": {
-        "version": "9.6"
-      }
+    "heroku-redis"
     }
   ],
   "env": {
@@ -48,6 +43,10 @@
     },
    "ODOOKU_ADDONS": {
       "description": "odooku addons",
+      "value": ""
+    },
+    "DATABASE_URL": {
+      "description": "database url",
       "value": ""
     },
     "GIT_SSH_KEY": {
