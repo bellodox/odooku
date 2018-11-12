@@ -9,15 +9,22 @@
   ],
   "buildpacks": [
     {
-      "url": "https://github.com/Prescrypto/odooku-buildpack#10.0"
+      "url": "https://github.com/Prescrypto/odooku-buildpack.git#submodules-fetch"
     },
     {
       "url": "https://github.com/SectorLabs/heroku-buildpack-git-submodule.git"
     }
   ],
   "addons": [
+    {
+      "plan": "heroku-postgresql:hobby-basic",
+      "options": {
+        "version": "9.6"
+      }
+    },
     "papertrail",
     "heroku-redis"
+
     
   ],
   "env": {
