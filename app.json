@@ -1,4 +1,4 @@
-{
+oww{
   "name": "Odooku",
   "description": "Run Odoo on Heroku",
   "repository": "https://github.com/adaptivdesign/odooku",
@@ -17,7 +17,13 @@
   ],
   "addons": [
     "papertrail",
-    "heroku-redis"
+    "heroku-redis",
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "9.6"
+      }
+    }
     
   ],
   "env": {
