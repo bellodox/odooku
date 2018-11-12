@@ -16,14 +16,15 @@ oww{
     }
   ],
   "addons": [
-    "papertrail",
-    "heroku-redis",
     {
-      "plan": "heroku-postgresql",
+      "plan": "heroku-postgresql:hobby-basic",
       "options": {
         "version": "9.6"
       }
-    }
+    },
+    "papertrail",
+    "heroku-redis"
+
     
   ],
   "env": {
