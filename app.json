@@ -52,10 +52,6 @@
       "description": "odooku addons",
       "value": ""
     },
-    "DATABASE_URL": {
-      "description": "database url",
-      "value": ""
-    },
     "GIT_SSH_KEY": {
       "description": "Git SSH key",
       "value": ""
