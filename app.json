@@ -48,6 +48,9 @@
    "ODOOKU_ADDONS": {
       "description": "odooku addons"
     },
+    "PYTHONPATH":{
+      required: true
+    },
     "GIT_SSH_KEY": {
       "description": "Git SSH key"
     }
