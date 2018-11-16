@@ -9,25 +9,28 @@
   ],
   "buildpacks": [
     {
-      "url": "https://github.com/Prescrypto/odooku-buildpack.git#submodules-fetch"
+      "url": "https://github.com/Prescrypto/odooku-buildpack#submodules-fetch"
     },
     {
       "url": "https://github.com/SectorLabs/heroku-buildpack-git-submodule.git"
     }
   ],
   "addons": [
+    {
+      "plan": "heroku-postgresql:hobby-dev",
+      "options": {
+        "version": "9.6"
+      }
+    },
     "papertrail",
     "heroku-redis"
-    
   ],
   "env": {
     "AWS_ACCESS_KEY_ID": {
-      "description": "AWS access key id",
-      "value": ""
+      "description": "AWS access key id"
     },
     "AWS_SECRET_ACCESS_KEY": {
-      "description": "AWS secret access key",
-      "value": ""
+      "description": "AWS secret access key"
     },
     "AWS_REGION": {
       "description": "AWS region",
@@ -35,23 +38,16 @@
     },
     "S3_BUCKET": {
       "description": "Amazon S3 bucket for attachment storage",
-      "value": ""
+      "required": true
     },
     "GIT_REPO_URL": {
-      "description": "Git SSH url to fetch submodules",
-      "value": ""
+      "description": "Git SSH url to fetch submodules"
     },
    "ODOOKU_ADDONS": {
-      "description": "odooku addons",
-      "value": ""
-    },
-    "DATABASE_URL": {
-      "description": "database url",
-      "value": ""
+      "description": "odooku addons"
     },
     "GIT_SSH_KEY": {
-      "description": "Git SSH key",
-      "value": ""
+      "description": "Git SSH key"
     }
   },
   "scripts": {
