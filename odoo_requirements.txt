@@ -9,7 +9,7 @@ gdata==2.0.18
 gevent==1.1.2
 greenlet==0.4.10
 jcconv==0.2.3
-Jinja2==2.8
+Jinja2==2.11.3
 lxml==3.6.1
 Mako==1.0.4
 MarkupSafe==0.23
